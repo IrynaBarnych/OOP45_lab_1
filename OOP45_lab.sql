@@ -1,5 +1,5 @@
---Виведіть прізвища та зарплати (сума ставки та надбавки) лікарів, які не перебувають у відпустці.
-SELECT Surname AS DoctorSurname, Salary AS TotalSalary
-FROM Doctors
-WHERE NOT EXISTS(SELECT * FROM Vacations WHERE Vacations.doctor_id = Doctors.id AND 
-				CURRENT_DATE BETWEEN start_date AND end_date)
+--Виведіть назви палат, які знаходяться у відділенні «Intensive Treatment».
+SELECT W.Name AS WardName
+FROM Wards W
+JOIN Departments D ON W.Building = D.Building
+WHERE D.Name = 'Oncology'
