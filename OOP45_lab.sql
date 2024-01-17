@@ -1,6 +1,6 @@
---додати зв'язок між Wards та Departments, додати надбавку лікарям
-ALTER TABLE Wards
-ADD COLUMN Department_Id INT REFERENCES Departments(id);
---додати надбавку лікарям
-ALTER TABLE Doctors
-ADD COLUMN Premium DECIMAL(10, 2) NOT NULL DEFAULT 0 CHECK (Premium >= 0);
+-- Виведіть повні імена лікарів та їх спеціалізації.
+SELECT Doctors.Name || ', ' || Doctors.surname AS DoctorName, string_agg(Specializations.name, ', ') AS Specialization
+FROM Doctors
+JOIN DoctorsSpecializations ON Doctors.Id = DoctorsSpecializations.Doctor_id
+JOIN Specializations ON DoctorsSpecializations.Specialization_id = Specializations.id
+GROUP BY Doctors.Id
