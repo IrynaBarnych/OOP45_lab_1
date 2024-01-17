@@ -1,6 +1,5 @@
--- Виведіть повні імена лікарів та їх спеціалізації.
-SELECT Doctors.Name || ', ' || Doctors.surname AS DoctorName, string_agg(Specializations.name, ', ') AS Specialization
+--Виведіть прізвища та зарплати (сума ставки та надбавки) лікарів, які не перебувають у відпустці.
+SELECT Surname AS DoctorSurname, Salary AS TotalSalary
 FROM Doctors
-JOIN DoctorsSpecializations ON Doctors.Id = DoctorsSpecializations.Doctor_id
-JOIN Specializations ON DoctorsSpecializations.Specialization_id = Specializations.id
-GROUP BY Doctors.Id
+WHERE NOT EXISTS(SELECT * FROM Vacations WHERE Vacations.doctor_id = Doctors.id AND 
+				CURRENT_DATE BETWEEN start_date AND end_date)
