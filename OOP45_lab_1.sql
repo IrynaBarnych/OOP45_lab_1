@@ -1,18 +1,11 @@
--- Виведіть прізвища лікарів із зазначенням відділень,
--- в яких вони проводять обстеження. Враховуйте обстеження, 
--- які проводяться лише у будні дні.
+-- Виведіть назви відділень, які отримували пожертвування
+-- у розмірі понад 100000, із зазначенням їх лікарів.
 
-SELECT
-    Doctor.Surname AS "Прізвище лікаря",
-    Examinations.Name AS "Відділення"
-FROM
-    Doctors Doctor
-JOIN
-    DoctorsSpecializations DS ON Doctor.Id = DS.Doctor_Id
-JOIN
-    Examinations ON DS.specialization_id = Examinations.Id
-WHERE
-    Examinations.DayOfWeek BETWEEN 1 AND 5;
+
+SELECT DISTINCT Departments.Name AS "Назва відділення"
+FROM Departments 
+JOIN Donations ON Departments.Id = Donations.Department_Id
+WHERE Donations.amount > 10000;
 
 
 
