@@ -1,38 +1,18 @@
--- Виведіть усі пожертвування за останній місяць у вигляді: 
--- відділення, спонсор, сума пожертвування, дата пожертвування.
+-- Виведіть прізвища лікарів із зазначенням відділень,
+-- в яких вони проводять обстеження. Враховуйте обстеження, 
+-- які проводяться лише у будні дні.
 
-
--- Вивести усі пожертвування за останній місяць
 SELECT
-    Departments.Name AS Відділення,
-    Sponsors.Name AS Спонсор,
-    Donations.Amount AS "Сума пожертвування",
-    Donations.Date AS "Дата пожертвування"
+    Doctor.Surname AS "Прізвище лікаря",
+    Examinations.Name AS "Відділення"
 FROM
-    Departments
+    Doctors Doctor
 JOIN
-    Donations ON Departments.Id = Donations.Department_Id
+    DoctorsSpecializations DS ON Doctor.Id = DS.Doctor_Id
 JOIN
-    Sponsors ON Donations.Sponsor_Id = Sponsors.Id
+    Examinations ON DS.specialization_id = Examinations.Id
 WHERE
-    EXTRACT(MONTH FROM Donations.Date) = EXTRACT(MONTH FROM CURRENT_DATE)
-    AND EXTRACT(YEAR FROM Donations.Date) = EXTRACT(YEAR FROM CURRENT_DATE);
-
-
--- Вивести усі пожертвування за певний період
-SELECT
-    Departments.Name AS "Відділення",
-    Sponsors.Name AS "Спонсор",
-    Donations.Amount AS "Сума пожертвування",
-    Donations.Date AS "Дата пожертвування"
-FROM
-    Departments
-JOIN
-    Donations ON Departments.Id = Donations.Department_Id
-JOIN
-    Sponsors ON Donations.Sponsor_Id = Sponsors.Id
-WHERE
-    Donations.Date BETWEEN '1900-01-01' AND '2023-12-31'; -- Замініть дати на бажаний діапазон
+    Examinations.DayOfWeek BETWEEN 1 AND 5;
 
 
 
